@@ -93,7 +93,7 @@ public class CatalogActivity extends AppCompatActivity implements
         });
 
         getLoaderManager().initLoader(PET_LOADER,null,this);
-        
+
     }
 
     @Override
