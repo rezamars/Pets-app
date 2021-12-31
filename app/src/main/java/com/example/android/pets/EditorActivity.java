@@ -74,8 +74,6 @@ public class EditorActivity extends AppCompatActivity implements
 
     private static int EXISTING_PET_LOADER = 0;
 
-    public int petSelectedId;
-
     /** Boolean flag that keeps track of whether the pet has been edited (true) or not (false) */
     public boolean mPetHasChanged = false;
 
@@ -106,17 +104,11 @@ public class EditorActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         mCurrentPetUri = intent.getData();
 
-        System.out.println("mCurrentPetUri: " + mCurrentPetUri);
-
         if(mCurrentPetUri == null){
             setTitle(R.string.editor_activity_title_new_pet);
         }
         else{
             setTitle(getString(R.string.editor_activity_title_edit_pet));
-
-            petSelectedId = Integer.parseInt(mCurrentPetUri.getLastPathSegment());
-            System.out.println("last segment of uri: " + petSelectedId);
-
             getLoaderManager().initLoader(EXISTING_PET_LOADER, null, this);
         }
 
@@ -217,8 +209,6 @@ public class EditorActivity extends AppCompatActivity implements
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
-
-                System.out.println("The mPetHasChanged-flag is: " + mPetHasChanged);
 
                 // If the pet hasn't changed, continue with navigating up to parent activity
                 // which is the {@link CatalogActivity}.
@@ -340,9 +330,6 @@ public class EditorActivity extends AppCompatActivity implements
 
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
-
-        //System.out.println("LoaderId is : " + loader.getId());
-        //System.out.println("cursor.getColumnCount is : " + curs);
 
         if (cursor.moveToFirst()) {
 
@@ -508,13 +495,8 @@ public class EditorActivity extends AppCompatActivity implements
             }
         }
 
-
-
-
         // Close the activity
         finish();
-
-        //getContentResolver().notifyChange(mCurrentPetUri, null);
 
     }
 
