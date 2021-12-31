@@ -61,7 +61,7 @@ public class CatalogActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
-        //getLoaderManager().restartLoader(PET_LOADER,null,this);
+        getLoaderManager().restartLoader(PET_LOADER,null,this);
 
         // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -120,7 +120,7 @@ public class CatalogActivity extends AppCompatActivity implements
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
-                // Do nothing for now
+                deleteAllPets();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,6 +177,14 @@ public class CatalogActivity extends AppCompatActivity implements
 
         mCursorAdqapter.swapCursor(null);
 
+    }
+
+    /**
+     * Helper method to delete all pets in the database.
+     */
+    private void deleteAllPets() {
+        int rowsDeleted = getContentResolver().delete(PetEntry.CONTENT_URI, null, null);
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
     }
 
 }
