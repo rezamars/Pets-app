@@ -54,10 +54,14 @@ public class CatalogActivity extends AppCompatActivity implements
 
     PetCursorAdapter mCursorAdqapter;
 
+    public static int petPositionNumber = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
+
+        //getLoaderManager().restartLoader(PET_LOADER,null,this);
 
         // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -85,6 +89,8 @@ public class CatalogActivity extends AppCompatActivity implements
 
                 Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
 
+                petPositionNumber = position;
+
                 intent.setData(currentPetUri);
 
                 startActivity(intent);
@@ -92,7 +98,7 @@ public class CatalogActivity extends AppCompatActivity implements
             }
         });
 
-        getLoaderManager().initLoader(PET_LOADER,null,this);
+        getLoaderManager().initLoader(PET_LOADER,null,this).forceLoad();
 
     }
 
@@ -142,6 +148,8 @@ public class CatalogActivity extends AppCompatActivity implements
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
+
+
         String[] projection = {
                 PetEntry._ID,
                 PetEntry.COLUMN_PET_NAME,
@@ -166,6 +174,9 @@ public class CatalogActivity extends AppCompatActivity implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
         mCursorAdqapter.swapCursor(null);
+
     }
+
 }
